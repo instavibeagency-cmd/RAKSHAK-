@@ -1,0 +1,159 @@
+
+cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06152e">
+<title>RAKSHAK - Security Demo</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#061020;color:#f5f8ff;font-family:Arial,sans-serif}
+header{padding:23px 20px;background:linear-gradient(140deg,#07152e,#0757ba);border-radius:0 0 26px 26px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:53px;height:53px;border:2px solid #42caff;border-radius:17px;display:grid;place-items:center;font-size:29px;background:#102a50}
+h1{margin:0;font-size:26px;letter-spacing:2px}
+.sub{color:#b9d8ff;font-size:12px;margin-top:5px}
+.pill{display:inline-block;background:#103b39;color:#5fffc3;border-radius:20px;padding:7px 11px;font-size:11px;margin-top:19px}
+main{padding:19px;max-width:650px;margin:auto}
+h2{font-size:17px;margin:23px 0 12px}
+.welcome{font-size:23px;font-weight:bold;margin-top:8px}
+.muted{color:#9cacc5;font-size:13px;line-height:1.6}
+.status{background:#102b2b;border:1px solid #176b62;padding:15px;border-radius:17px;display:flex;gap:12px;align-items:center;margin-top:18px}
+.status .check{font-size:26px}
+.status strong{color:#68f7c1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:#101e34;border:1px solid #253a59;border-radius:17px;padding:16px 13px;color:white;text-align:left;min-height:125px;cursor:pointer}
+.tile:active{transform:scale(.98)}
+.tile .ico{font-size:27px;display:block;margin-bottom:12px}
+.tile strong{font-size:14px;display:block}
+.tile small{color:#aab9d0;display:block;margin-top:7px;line-height:1.4}
+.panel{background:#101e34;border:1px solid #253a59;padding:17px;border-radius:18px}
+input{width:100%;padding:14px;background:#071225;color:white;border:1px solid #344b6c;border-radius:11px;margin:12px 0;outline:none}
+.primary{width:100%;border:0;border-radius:11px;padding:14px;background:#147cff;color:white;font-size:15px;font-weight:bold;cursor:pointer}
+.result{display:none;margin-top:13px;padding:12px;border-radius:10px;background:#18332e;color:#8dffd2;font-size:13px;line-height:1.5}
+.sos{background:linear-gradient(135deg,#52151f,#231522);border:1px solid #8d3340;border-radius:18px;padding:17px;text-align:center}
+.sos button{background:#e32f48;color:white;border:0;border-radius:50%;width:90px;height:90px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.quick button{background:#172943;color:#eaf3ff;border:1px solid #314764;border-radius:12px;padding:13px 4px;font-size:12px;cursor:pointer}
+footer{text-align:center;padding:25px;color:#8193af;font-size:11px;line-height:1.8}
+nav{position:sticky;bottom:0;background:#091629;border-top:1px solid #243651;display:flex;justify-content:space-around;padding:13px 4px;color:#b5c7e2;font-size:12px}
+nav a{color:inherit;text-decoration:none}
+@media(min-width:500px){main{padding:25px}.tile{min-height:140px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">🛡️</div>
+    <div><h1>RAKSHAK</h1><div class="sub">YOUR DIGITAL SAFETY PARTNER</div></div>
+  </div>
+  <div class="pill">● DEMO VERSION · TEST MODE</div>
+</header>
+
+<main>
+  <div class="welcome">Stay Safe. Stay Protected.</div>
+  <p class="muted">A smarter first step towards digital safety.</p>
+
+  <div class="status">
+    <div class="check">🛡️</div>
+    <div><strong>RAKSHAK Demo is Ready</strong><div class="muted">Demo interface active. Real protection is not enabled yet.</div></div>
+  </div>
+
+  <h2>Security Centre</h2>
+  <div class="grid">
+    <button class="tile" onclick="go('checker')"><span class="ico">🔗</span><strong>Link Checker</strong><small>Check a suspicious link in demo mode</small></button>
+    <button class="tile" onclick="go('calls')"><span class="ico">📞</span><strong>Call Safety</strong><small>Open calling and safety options</small></button>
+    <button class="tile" onclick="go('emergency')"><span class="ico">🆘</span><strong>Emergency SOS</strong><small>Find emergency calling options</small></button>
+    <button class="tile" onclick="go('family')"><span class="ico">👨‍👩‍👧</span><strong>Family Safety</strong><small>Plan your trusted contacts</small></button>
+    <button class="tile" onclick="demo('App Security','Real app scanning will be added in a later version.')"><span class="ico">📱</span><strong>App Security</strong><small>Security feature preview</small></button>
+    <button class="tile" onclick="demo('Privacy Centre','Privacy controls will be developed before launch.')"><span class="ico">🔐</span><strong>Privacy Centre</strong><small>Privacy and protection settings</small></button>
+  </div>
+
+  <h2 id="checker">🔎 Suspicious Link Checker</h2>
+  <div class="panel">
+    <div class="muted">Enter a URL to preview the link-checking interface.</div>
+    <input id="url" type="url" placeholder="https://example.com">
+    <button class="primary" onclick="checkLink()">Check Link (Demo)</button>
+    <div id="result" class="result"></div>
+    <p class="muted">This demo does not verify a website's real safety. Never enter passwords, OTPs or banking details on suspicious websites.</p>
+  </div>
+
+  <h2 id="calls">📞 Calling & Help</h2>
+  <div class="panel">
+    <p class="muted">Choose a service to open your phone's dialler with the relevant number. Confirm the number before calling.</p>
+    <div class="quick">
+      <button onclick="dial('112')">🚨<br>Emergency 112</button>
+      <button onclick="dial('1930')">🛡️<br>Cyber Fraud 1930</button>
+      <button onclick="dial('100')">👮<br>Police 100*</button>
+    </div>
+    <p class="muted">*Use 112 for emergency assistance in India. The dialler opens only after you tap; no call is placed automatically.</p>
+  </div>
+
+  <h2 id="emergency">🆘 Emergency SOS</h2>
+  <div class="sos">
+    <div style="font-size:18px;font-weight:bold">Need Help?</div>
+    <p class="muted">Tap to open the emergency dialler.</p>
+    <button onclick="dial('112')">SOS</button>
+    <div class="muted">Demo only · Does not send your location or alert family automatically.</div>
+  </div>
+
+  <h2 id="family">👨‍👩‍👧 Family Safety</h2>
+  <div class="panel">
+    <div style="font-weight:bold">Trusted Contacts</div>
+    <p class="muted">In a future version, you will be able to configure trusted contacts and consent-based emergency alerts.</p>
+    <button class="primary" onclick="demo('Family Safety','Family contacts are not saved in this demo. No personal information has been collected.')">Preview Feature</button>
+  </div>
+</main>
+
+<nav>
+  <a href="#">🏠 Home</a>
+  <a href="#checker">🔎 Check</a>
+  <a href="#emergency">🆘 SOS</a>
+  <a href="#family">👨‍👩‍👧 Family</a>
+</nav>
+
+<footer>
+  🛡️ RAKSHAK · DIGITAL SAFETY DEMO<br>
+  Built as a prototype · Not an official government or certified security app<br>
+  Real security features require implementation and testing.
+</footer>
+
+<script>
+function demo(title,message){alert(title+"\n\n"+message)}
+function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"})}
+function dial(number){
+  if(confirm("Open phone dialler for "+number+"? Confirm the number before calling.")){
+    window.location.href="tel:"+number;
+  }
+}
+function checkLink(){
+  const value=document.getElementById("url").value.trim();
+  const result=document.getElementById("result");
+  result.style.display="block";
+  if(!value){
+    result.textContent="Please enter a URL first.";
+    return;
+  }
+  try{
+    const u=new URL(value);
+    if(u.protocol!=="http:" && u.protocol!=="https:"){
+      result.textContent="Unsupported URL format. Use an HTTP or HTTPS link.";
+      return;
+    }
+    if(u.protocol!=="https:" || /[^\x00-\x7F]/.test(u.hostname) || /@/.test(u.host)){
+      result.textContent="⚠️ Warning sign detected. This is not a real security scan. Do not open the link unless you trust its source.";
+    }else{
+      result.textContent="ℹ️ Format check passed only. This does NOT mean the website is safe. Its reputation has not been checked.";
+    }
+  }catch(e){
+    result.textContent="Invalid URL format. Please check the link.";
+  }
+}
+</script>
+</body>
+</html>
+EOF
+
